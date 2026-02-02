@@ -13,11 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 public class MainActivity extends AppCompatActivity {
-    int licznik = 0;
+    //int licznik = 0;
     Button button;
     TextView textview;
+    LicznikViewModel licznikViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +31,21 @@ public class MainActivity extends AppCompatActivity {
 
         button = findViewById(R.id.button1);
         textview = findViewById(R.id.textView1);
+        licznikViewModel= new ViewModelProvider(this).get(LicznikViewModel.class);
         if(savedInstanceState != null){
-            licznik = savedInstanceState.getInt("LICZNIK");
-            textview.setText(""+licznik);
+            //licznik = savedInstanceState.getInt("LICZNIK");
+            //textview.setText(""+licznik);
         }
+        textview.setText(licznikViewModel.getLicznik()+"");
 
         button.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        licznik++;
-                        textview.setText(""+licznik);
+                        //licznik++;
+                        //textview.setText(""+licznik);
+                        licznikViewModel.addLicznik();
+                        textview.setText(""+licznikViewModel.getLicznik());
                     }
                 }
         );
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.i("CYKL ŻYCIA", "uruchomiona metoda onSaveInstantState");
-        outState.putInt("LICZNIK", licznik);
+        //outState.putInt("LICZNIK", licznik);
     }
 
     @Override
